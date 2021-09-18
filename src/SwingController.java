@@ -16,6 +16,8 @@ public class SwingController extends JFrame implements KeyListener {
 
         swingController.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        swingController.addKeyListener(swingController);
+
     }
 
     /**
@@ -43,16 +45,15 @@ public class SwingController extends JFrame implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-
+    public void keyPressed(KeyEvent e) {
+        BoardControl.updatePlayerPosition(e.getKeyChar());
+        System.out.println("Pressed: " + e.getKeyChar());
     }
     @Override
-    public void keyPressed(KeyEvent e) {
-        // Board.keyInputted(e.getKeyChar());
+    public void keyTyped(KeyEvent e) {
     }
     @Override
     public void keyReleased(KeyEvent e) {
-
     }
 
     public static class MyPanel extends JPanel implements ActionListener {
@@ -63,8 +64,26 @@ public class SwingController extends JFrame implements KeyListener {
             for(int i = 0;i< 12;i++){
                 for(int j = 0;j<12;j++){
                     g.drawRect(i * 40, j * 40, 40, 40);
+                    if(BoardControl.getBoard()[j][i] == 1){
+                        g.fillRect(i * 40, j * 40, 40, 5);
+                        g.fillRect(i * 40, j * 40  + 10, 40, 5);
+                        g.fillRect(i * 40, j * 40  + 20, 40, 5);
+                        g.fillRect(i * 40, j * 40  + 30, 40, 5);
+                    }
                 }
             }
+            for(Point p : BoardControl.getRandomPositionsMhos()){
+                g.setColor(Color.red.darker());
+                g.fillOval(p.x * 40 + 5, p.y * 40 + 5,  30,30);
+                g.setColor(Color.black);
+                g.drawOval(p.x * 40 + 5, p.y * 40 + 5,  30,30);
+            }
+
+            g.setColor(Color.green.darker());
+            g.fillOval(BoardControl.getRandomPositionPlayer().x * 40 + 5, BoardControl.getRandomPositionPlayer().y * 40 + 5,  30,30);
+            g.setColor(Color.black);
+            g.drawOval(BoardControl.getRandomPositionPlayer().x * 40 + 5, BoardControl.getRandomPositionPlayer().y * 40 + 5,  30,30);
+
             timer.start();
         }
 
