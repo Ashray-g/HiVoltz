@@ -33,7 +33,7 @@ public class SwingController extends JFrame implements KeyListener {
         swingController.add(panel);
         swingController.pack();
 
-        swingController.setSize(40 * 13, 40 * 13);
+        swingController.setSize(40 * (BoardControl.getWidth()+1), 40 * (BoardControl.getHeight() + 1));
 
         JLabel lblLName = new JLabel("Last Name:");
         JTextField tfLName = new JTextField(20);
@@ -90,9 +90,17 @@ public class SwingController extends JFrame implements KeyListener {
         } else if(BoardControl.getCurrentState() == BoardControl.State.TITLE && e.getKeyChar() == 't'){
             BoardControl.start();
         } else if(BoardControl.getCurrentState() == BoardControl.State.GAME_OVER && e.getKeyChar() == 'r'){
-            BoardControl.restart();
+            try {
+                BoardControl.restart();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         } else if(BoardControl.getCurrentState() == BoardControl.State.YOU_WIN && e.getKeyChar() == 'r'){
-            BoardControl.restart();
+            try {
+                BoardControl.restart();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         }
     }
     @Override
@@ -117,23 +125,26 @@ public class SwingController extends JFrame implements KeyListener {
             }else if(BoardControl.getCurrentState() == BoardControl.State.TITLE){
                 titleDraw(g);
             }else if(BoardControl.getCurrentState() == BoardControl.State.GAME_OVER){
-                g.fillRect(0, 0, 800, 800);
-                g.drawImage(gameOver, 0, 20, (int)(gameOver.getWidth(null)/3), (int)(gameOver.getHeight(null)/3),null);
+                double fact = 3 / (BoardControl.getHeight() / (double)12);
+                g.fillRect(0, 0, 1500, 1500);
+                g.drawImage(gameOver, 0, 20, (int)(gameOver.getWidth(null)/fact), (int)(gameOver.getHeight(null)/fact),null);
             }else if(BoardControl.getCurrentState() == BoardControl.State.YOU_WIN){
-                g.fillRect(0, 0, 800, 800);
-                g.drawImage(youWin, 0, 50, (int)(youWin.getWidth(null)/2.6), (int)(youWin.getHeight(null)/2.6),null);
+                double fact = 2.6 / (BoardControl.getHeight() / (double)12);
+                g.fillRect(0, 0, 1500, 1500);
+                g.drawImage(youWin, 0, 50, (int)(youWin.getWidth(null)/fact), (int)(youWin.getHeight(null)/fact),null);
             }
         }
 
         public void titleDraw(Graphics g){
-            g.fillRect(0, 0, 800, 800);
-            g.drawImage(title, 0, 70, (int)(title.getWidth(null)/2.8), (int)(title.getHeight(null)/2.8),null);
+            g.fillRect(0, 0, 1500, 1500);
+            double fact = 2.8 / (BoardControl.getHeight() / (double)12);
+            g.drawImage(title, 0, 70, (int)(title.getWidth(null)/fact), (int)(title.getHeight(null)/fact),null);
         }
 
         public void game(Graphics g){
-            g.fillRect(0, 0, 800, 800);
-            for(int i = 0;i< 12;i++){
-                for(int j = 0;j<12;j++){
+            g.fillRect(0, 0, 1500, 1500);
+            for(int i = 0;i< BoardControl.getHeight();i++){
+                for(int j = 0;j<BoardControl.getWidth();j++){
                     g.fillRect(i * 40, j * 40, 40, 40);
                     if(BoardControl.getBoard()[j][i] == 1){
                         g.drawImage(fence, i * 40 + 5, j * 40 + 5, 25, 25, null);

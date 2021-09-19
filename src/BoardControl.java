@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
@@ -22,6 +23,14 @@ public class BoardControl {
         TITLE, IN_GAME, GAME_OVER, YOU_WIN
     }
 
+    public static int getHeight() {
+        return height;
+    }
+
+    public static int getWidth() {
+        return width;
+    }
+
     public static void start(){
         currentState = State.IN_GAME;
     }
@@ -31,7 +40,7 @@ public class BoardControl {
     public static void win(){
         currentState = State.YOU_WIN;
     }
-    public static void restart(){
+    public static void restart() throws IOException {
         currentState = State.TITLE;
         Main.init();
     }
