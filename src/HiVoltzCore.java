@@ -15,7 +15,9 @@ public class HiVoltzCore {
             int playerY = player.y;
 
             //checking if its Vertical
-            if (mhoX == playerX) {
+            if(mhoX == playerX && mhoY == playerY){
+                //no change
+            }else if (mhoX == playerX) {
                 if (mhoY > playerY) {
                     newMhoY = mhoY-1;
                 } else {
@@ -71,6 +73,10 @@ public class HiVoltzCore {
             if(grid[mho.y][mho.x] == 0){
                 grid[mho.y][mho.x] = 2;
                 mos.add(mho);
+            }
+            if(grid[mho.y][mho.x] == 3){
+                grid[mho.y][mho.x] = 2;
+                BoardControl.gameOver();
             }
         }
 

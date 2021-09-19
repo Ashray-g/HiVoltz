@@ -128,7 +128,8 @@ public class BoardControl {
         board[y][x] = 0;
         int x1 = (int) randomPositionPlayer.getX();
         int y1 = (int) randomPositionPlayer.getY();
-        board[y1][x1] = 3;
+        if(board[y1][x1] != 0) gameOver();
+        else board[y1][x1] = 3;
         print();
     }
 
@@ -168,5 +169,10 @@ public class BoardControl {
 
         randomPositionsMhos.clear();
         randomPositionsMhos.addAll(mhos2);
+    }
+
+    public static void gameOver(){
+        randomPositionPlayer.x = 200;
+        randomPositionPlayer.y = 200;
     }
 }
