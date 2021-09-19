@@ -30,17 +30,10 @@ public class SwingController extends JFrame implements KeyListener {
      */
     private static void initializeJPanel(){
         panel = new MyPanel();
-        swingController.add(panel);
         swingController.pack();
 
         swingController.setSize(40 * (BoardControl.getWidth()+1), 40 * (BoardControl.getHeight() + 1));
-
-        JLabel lblLName = new JLabel("Last Name:");
-        JTextField tfLName = new JTextField(20);
-        lblLName.setLabelFor(tfLName);
-
-        swingController.add(lblLName);
-        panel.add(lblLName);
+        swingController.add(panel);
 
     }
 
