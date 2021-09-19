@@ -13,6 +13,20 @@ public class BoardControl {
     private static HashSet<Point> randomPositionsMhos = new HashSet<>();
     private static Point randomPositionPlayer = new Point();
 
+    private static boolean game = false;
+    private static boolean gameOver = false;
+
+    public static boolean isGameOver() {
+        return gameOver;
+    }
+    public static boolean isGame() {
+        return game && !gameOver;
+    }
+
+    public static void start(){
+        game = true;
+    }
+
     public static void init(int height, int width) {
         board = new int[height][width];
     }
@@ -130,7 +144,6 @@ public class BoardControl {
         int y1 = (int) randomPositionPlayer.getY();
         if(board[y1][x1] != 0) gameOver();
         else board[y1][x1] = 3;
-        print();
     }
 
     public static void updatePlayerPosition(char in) {
@@ -159,6 +172,7 @@ public class BoardControl {
                 randomPositionPlayer.setLocation(randomPositionPlayer.getX() + 1, randomPositionPlayer.getY() + 1); break;
             case 'j':
                 randomPositionPlayer.setLocation(ran.nextInt(10) + 1, ran.nextInt(10) + 1); break;
+
         }
 
         resetPlayerPosition(temp);
@@ -174,5 +188,6 @@ public class BoardControl {
     public static void gameOver(){
         randomPositionPlayer.x = 200;
         randomPositionPlayer.y = 200;
+        gameOver = true;
     }
 }

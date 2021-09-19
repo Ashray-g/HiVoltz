@@ -1,7 +1,8 @@
 import java.awt.*;
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         SwingController.initAll();
         BoardControl.init(12, 12);
         BoardControl.spawnFences();
