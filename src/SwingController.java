@@ -162,6 +162,7 @@ public class SwingController extends JFrame implements KeyListener {
         public void actionPerformed(ActionEvent e) {
             if(e.getSource()==timer){
                 repaint();// this will call at every 0.1 second
+                System.out.println(BoardControl.getCurrentState());
             }
         }
     }

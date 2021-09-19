@@ -55,6 +55,7 @@ public class BoardControl {
         board = new int[height][width];
         randomPositionsFences = new HashSet<>();
         randomPositionsMhos = new HashSet<>();
+        randomPositionPlayer = new Point();
     }
 
     public static int[][] getBoard() {

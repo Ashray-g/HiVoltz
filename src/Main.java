@@ -7,7 +7,7 @@ public class Main {
     }
 
     public static void init() throws IOException {
-        BoardControl.init(30, 30);
+        BoardControl.init(25, 25);
         BoardControl.spawnFences();
         BoardControl.spawnMhos();
         BoardControl.spawnPlayer();
