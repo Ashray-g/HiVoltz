@@ -41,10 +41,12 @@ public class SwingController extends JFrame implements KeyListener {
     private static Image player;
     private static Image mho;
     private static Image title;
+    private static Image gameOver;
 
     static {
         try {
             title = ImageIO.read(new File("src/assets/title2.png"));
+            gameOver = ImageIO.read(new File("src/assets/gameOver.png"));
         } catch (IOException e) {
         }
     }
@@ -71,7 +73,11 @@ public class SwingController extends JFrame implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if(BoardControl.isGame()){
-            BoardControl.updatePlayerPosition(e.getKeyChar());
+            try {
+                BoardControl.updatePlayerPosition(e.getKeyChar());
+            } catch (InterruptedException interruptedException) {
+                interruptedException.printStackTrace();
+            }
         }
         else if(e.getKeyChar() == 't'){
             BoardControl.start();
@@ -99,7 +105,8 @@ public class SwingController extends JFrame implements KeyListener {
             }else if(!BoardControl.isGameOver()){
                 titleDraw(g);
             }else{
-
+                g.fillRect(0, 0, 800, 800);
+                g.drawImage(gameOver, 0, 20, (int)(gameOver.getWidth(null)/3), (int)(gameOver.getHeight(null)/3),null);
             }
         }
 

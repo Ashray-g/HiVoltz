@@ -146,7 +146,7 @@ public class BoardControl {
         else board[y1][x1] = 3;
     }
 
-    public static void updatePlayerPosition(char in) {
+    public static void updatePlayerPosition(char in) throws InterruptedException {
         Random ran = new Random();
 
         Point temp = new Point((int) randomPositionPlayer.getX(), (int) randomPositionPlayer.getY());
