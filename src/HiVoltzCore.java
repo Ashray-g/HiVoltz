@@ -45,7 +45,24 @@ public class HiVoltzCore {
                     newMhoY = mhoY + 1;
                     newMhoX = mhoX - 1;
                 }
+            }else if(Math.abs(playerX-mhoX)>Math.abs(playerY-mhoY)) {
+                if (playerX>mhoX){
+                    newMhoX = mhoX + 1;
+                }
+                else {
+                    newMhoX = mhoX - 1;
+                }
             }
+            else if(Math.abs(playerX-mhoX)<Math.abs(playerY-mhoY)) {
+                if (playerY>mhoY){
+                    newMhoY = mhoY + 1;
+                }
+                else {
+                    newMhoY = mhoY - 1;
+                }
+            }
+
+
             grid[mhoY][mhoX] = 0;
             newMhos.add(new Point(newMhoX, newMhoY));
         } //end mho loop
