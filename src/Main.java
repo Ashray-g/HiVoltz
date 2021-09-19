@@ -4,11 +4,7 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
         SwingController.initAll();
-        BoardControl.init(12, 12);
-        BoardControl.spawnFences();
-        BoardControl.spawnMhos();
-        BoardControl.spawnPlayer();
-        BoardControl.print();
+        init();
 
 //        for(Point tp : BoardControl.getRandomPositionsMhos() ){
 //            if(BoardControl.getRandomPositionsFences().contains(tp)){
@@ -16,5 +12,13 @@ public class Main {
 //            }
 //        }
 
+    }
+
+    public static void init(){
+        BoardControl.init(12, 12);
+        BoardControl.spawnFences();
+        BoardControl.spawnMhos();
+        BoardControl.spawnPlayer();
+        BoardControl.print();
     }
 }

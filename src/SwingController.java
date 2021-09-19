@@ -42,11 +42,13 @@ public class SwingController extends JFrame implements KeyListener {
     private static Image mho;
     private static Image title;
     private static Image gameOver;
+    private static Image youWin;
 
     static {
         try {
-            title = ImageIO.read(new File("src/assets/title2.png"));
+            title = ImageIO.read(new File("src/assets/title.png"));
             gameOver = ImageIO.read(new File("src/assets/gameOver.png"));
+            youWin = ImageIO.read(new File("src/assets/youWin2.png"));
         } catch (IOException e) {
         }
     }
@@ -72,15 +74,18 @@ public class SwingController extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(BoardControl.isGame()){
+        if(BoardControl.getCurrentState() == BoardControl.State.IN_GAME && "qweasdzxcjftr".contains(e.getKeyChar() + "")){
             try {
                 BoardControl.updatePlayerPosition(e.getKeyChar());
             } catch (InterruptedException interruptedException) {
                 interruptedException.printStackTrace();
             }
-        }
-        else if(e.getKeyChar() == 't'){
+        } else if(BoardControl.getCurrentState() == BoardControl.State.TITLE && e.getKeyChar() == 't'){
             BoardControl.start();
+        } else if(BoardControl.getCurrentState() == BoardControl.State.GAME_OVER && e.getKeyChar() == 'r'){
+            BoardControl.restart();
+        } else if(BoardControl.getCurrentState() == BoardControl.State.YOU_WIN && e.getKeyChar() == 'r'){
+            BoardControl.restart();
         }
     }
     @Override
@@ -100,13 +105,16 @@ public class SwingController extends JFrame implements KeyListener {
         }
 
         public void drawPlease(Graphics g){
-            if(BoardControl.isGame()){
+            if(BoardControl.getCurrentState() == BoardControl.State.IN_GAME){
                 game(g);
-            }else if(!BoardControl.isGameOver()){
+            }else if(BoardControl.getCurrentState() == BoardControl.State.TITLE){
                 titleDraw(g);
-            }else{
+            }else if(BoardControl.getCurrentState() == BoardControl.State.GAME_OVER){
                 g.fillRect(0, 0, 800, 800);
                 g.drawImage(gameOver, 0, 20, (int)(gameOver.getWidth(null)/3), (int)(gameOver.getHeight(null)/3),null);
+            }else if(BoardControl.getCurrentState() == BoardControl.State.YOU_WIN){
+                g.fillRect(0, 0, 800, 800);
+                g.drawImage(youWin, 0, 50, (int)(youWin.getWidth(null)/2.6), (int)(youWin.getHeight(null)/2.6),null);
             }
         }
 

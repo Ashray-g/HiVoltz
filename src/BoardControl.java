@@ -13,22 +13,36 @@ public class BoardControl {
     private static HashSet<Point> randomPositionsMhos = new HashSet<>();
     private static Point randomPositionPlayer = new Point();
 
-    private static boolean game = false;
-    private static boolean gameOver = false;
 
-    public static boolean isGameOver() {
-        return gameOver;
+    private static State currentState = State.TITLE;
+
+    public enum State{
+        TITLE, IN_GAME, GAME_OVER, YOU_WIN
     }
-    public static boolean isGame() {
-        return game && !gameOver;
-    }
+
 
     public static void start(){
-        game = true;
+        currentState = State.IN_GAME;
+    }
+    public static void lose(){
+        currentState = State.GAME_OVER;
+    }
+    public static void win(){
+        currentState = State.YOU_WIN;
+    }
+    public static void restart(){
+        currentState = State.TITLE;
+        Main.init();
+    }
+
+    public static State getCurrentState() {
+        return currentState;
     }
 
     public static void init(int height, int width) {
         board = new int[height][width];
+        randomPositionsFences = new HashSet<>();
+        randomPositionsMhos = new HashSet<>();
     }
 
     public static int[][] getBoard() {
@@ -183,11 +197,14 @@ public class BoardControl {
 
         randomPositionsMhos.clear();
         randomPositionsMhos.addAll(mhos2);
+        if(randomPositionsMhos.isEmpty()){
+            currentState = State.YOU_WIN;
+        }
     }
 
     public static void gameOver(){
         randomPositionPlayer.x = 200;
         randomPositionPlayer.y = 200;
-        gameOver = true;
+        currentState = State.GAME_OVER;
     }
 }
