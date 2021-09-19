@@ -7,12 +7,13 @@ public class Main {
         BoardControl.spawnFences();
         BoardControl.spawnMhos();
         BoardControl.spawnPlayer();
+        BoardControl.print();
 
-        for(Point tp : BoardControl.getRandomPositionsMhos() ){
-            if(BoardControl.getRandomPositionsFences().contains(tp)){
-                System.out.println(tp);
-            }
-        }
+//        for(Point tp : BoardControl.getRandomPositionsMhos() ){
+//            if(BoardControl.getRandomPositionsFences().contains(tp)){
+//                System.out.println(tp);
+//            }
+//        }
 
     }
 }

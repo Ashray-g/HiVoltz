@@ -69,15 +69,20 @@ public class SwingController extends JFrame implements KeyListener {
                         g.fillRect(i * 40, j * 40  + 10, 40, 5);
                         g.fillRect(i * 40, j * 40  + 20, 40, 5);
                         g.fillRect(i * 40, j * 40  + 30, 40, 5);
+                    }else if(BoardControl.getBoard()[j][i] == 2){
+                        g.setColor(Color.red.darker());
+                        g.fillOval(i * 40 + 5, j * 40 + 5,  30,30);
+                        g.setColor(Color.black);
+                        g.drawOval(i * 40 + 5, j * 40 + 5,  30,30);
                     }
                 }
             }
-            for(Point p : BoardControl.getRandomPositionsMhos()){
-                g.setColor(Color.red.darker());
-                g.fillOval(p.x * 40 + 5, p.y * 40 + 5,  30,30);
-                g.setColor(Color.black);
-                g.drawOval(p.x * 40 + 5, p.y * 40 + 5,  30,30);
-            }
+//            for(Point p : BoardControl.getRandomPositionsMhos()){
+//                g.setColor(Color.red.darker());
+//                g.fillOval(p.x * 40 + 5, p.y * 40 + 5,  30,30);
+//                g.setColor(Color.black);
+//                g.drawOval(p.x * 40 + 5, p.y * 40 + 5,  30,30);
+//            }
 
             g.setColor(Color.green.darker());
             g.fillOval(BoardControl.getRandomPositionPlayer().x * 40 + 5, BoardControl.getRandomPositionPlayer().y * 40 + 5,  30,30);

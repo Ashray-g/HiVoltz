@@ -1,83 +1,63 @@
 import java.awt.*;
-import java.util.*;
-import java.lang.Math.*;
+import java.util.ArrayList;
 
-public class HiVoltzCore{
-    public static int grid[][];
-    public static void main(String[] args) {
-        int hor = 12;
-        int ver = 12;
-        grid = new int[][]{
-                {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-                {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
-                {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
-                {3, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 3},
-                {3, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 3},
-                {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
-                {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
-                {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
-                {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
-                {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
-                {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
-                {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3}
-        };
-        int mhoX = 2;
-        int mhoY = 4;
+public class HiVoltzCore {
+    public static ArrayList<Point> updateMhos(int[][] grid, Point player, ArrayList<Point> mhos){
+        ArrayList<Point> newMhos = new ArrayList<>();
 
-//      ArrayList<Point> aw = new ArrayLisy<>();
-        int playerx = 0;
-        int playery = 0;
-        for (int i = 0; i < hor; i++) {
-            for (int j = 0; j < ver; j++) {
-                if (grid[i][j] == 2) {
-                    playerx = i;
-                    playery = j;
+        for(Point mho : mhos){ //mho loop
+            int mhoX = mho.x;
+            int mhoY = mho.y;
+            int newMhoY = mhoY;
+            int newMhoX = mhoX;
+
+            int playerX = player.x;
+            int playerY = player.y;
+
+            //checking if its Vertical
+            if (mhoX == playerX) {
+                if (mhoY > playerY) {
+                    newMhoY = mhoY-1;
+                } else {
+                    newMhoY = mhoY+1;
                 }
             }
-        }
-        //checking if its horizontal
-        if (mhoY == playery) {
-            if (mhoX > playerx) {
-                grid[mhoX][mhoY] = 0;
-                grid[mhoX - 1][mhoY] = 1;
-            } else {
-                grid[mhoX + 1][mhoY] = 1;
+            //Checking if it's horizontal
+            else if (mhoY == playerY) {
+                if (mhoX > playerX) {
+                    newMhoX = mhoX - 1;
+                } else {
+                    newMhoX = mhoX - 1;
+                }
+            }
+            //Checking for direct diagonals
+            else if (Math.abs(mhoY - playerY) == (Math.abs(mhoX - playerX))) {
+                if (mhoY > playerY && mhoX > playerX) {
+                    newMhoY = mhoY - 1;
+                    newMhoX = mhoX - 1;
+                } else if (mhoY > playerY) {
+                    newMhoY = mhoY - 1;
+                    newMhoX = mhoX + 1;
+                } else if (mhoX < playerX) {
+                    newMhoY = mhoY + 1;
+                    newMhoX = mhoX + 1;
+                } else{
+                    newMhoY = mhoY + 1;
+                    newMhoX = mhoX - 1;
+                }
+            }
+            grid[mhoY][mhoX] = 0;
+            newMhos.add(new Point(newMhoX, newMhoY));
+        } //end mho loop
+        ArrayList<Point> mos = new ArrayList<>();
+        for(Point mho : newMhos){
+            if(grid[mho.y][mho.x] == 0){
+                grid[mho.y][mho.x] = 2;
+                mos.add(mho);
             }
         }
 
-        if (mhoX == playerx) {
-            if (mhoY > playery) {
-                grid[mhoX][mhoY] = 0;
-                grid[mhoX][mhoY - 1] = 0;
-            } else {
-                grid[mhoX][mhoY + 1] = 1;
-            }
-        }
-        if (Math.abs(mhoX - playerx) == (Math.abs(mhoY - playery))) {
-            if (mhoX > playerx && mhoY > playery) {
-                grid[mhoX][mhoY] = 0;
-                grid[mhoX - 1][mhoY - 1] = 1;
-            } else if (mhoX > playerx && mhoY < playery) {
-                grid[mhoX][mhoY] = 0;
-                grid[mhoX - 1][mhoY + 1] = 1;
-            } else if (mhoX < playerx && mhoY < playery) {
-                grid[mhoX][mhoY] = 0;
-                grid[mhoX + 1][mhoY + 1] = 1;
-            } else if (mhoX < playerx && mhoY > playery) {
-                grid[mhoX][mhoY] = 0;
-                grid[mhoX + 1][mhoY - 1] = 1;
-            }
+        return mos;
 
-        }
-        printGrid();
     }
-    public static void printGrid(){
-        for (int i = 0; i < 10; ++i) {
-            for (int j = 0; j < 10; ++j) {
-                System.out.print(grid[i][j] + " ");
-            }
-            System.out.println(" ");
-        }
-    }
-
 }

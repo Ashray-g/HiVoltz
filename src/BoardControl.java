@@ -1,5 +1,5 @@
 import java.awt.*;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -161,5 +161,12 @@ public class BoardControl {
         }
 
         resetPlayerPosition(temp);
+
+        ArrayList<Point> mhos = new ArrayList<>(getRandomPositionsMhos());
+
+        ArrayList<Point> mhos2 = HiVoltzCore.updateMhos(BoardControl.getBoard(), BoardControl.getRandomPositionPlayer(), mhos);
+
+        randomPositionsMhos.clear();
+        randomPositionsMhos.addAll(mhos2);
     }
 }
