@@ -15,7 +15,7 @@ public class Main {
     }
 
     public static void init(){
-        BoardControl.init(12, 12);
+        BoardControl.init(14, 14);
         BoardControl.spawnFences();
         BoardControl.spawnMhos();
         BoardControl.spawnPlayer();

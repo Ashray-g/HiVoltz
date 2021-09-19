@@ -13,13 +13,14 @@ public class BoardControl {
     private static HashSet<Point> randomPositionsMhos = new HashSet<>();
     private static Point randomPositionPlayer = new Point();
 
-
     private static State currentState = State.TITLE;
+
+    private static int height;
+    private static int width;
 
     public enum State{
         TITLE, IN_GAME, GAME_OVER, YOU_WIN
     }
-
 
     public static void start(){
         currentState = State.IN_GAME;
@@ -39,7 +40,9 @@ public class BoardControl {
         return currentState;
     }
 
-    public static void init(int height, int width) {
+    public static void init(int height2, int width2) {
+        height = height2;
+        width = width2;
         board = new int[height][width];
         randomPositionsFences = new HashSet<>();
         randomPositionsMhos = new HashSet<>();
@@ -68,8 +71,10 @@ public class BoardControl {
     public static void spawnFences() {
         Random ran = new Random();
 
-        for (int i = 0; i < 20; i++) {
-            Point pos = new Point(ran.nextInt(10) + 1, ran.nextInt(10) + 1);
+        int fencesToSpawn = (int)((width - 2) * (height - 2) * 0.2 + 0.5);
+
+        for (int i = 0; i < fencesToSpawn; i++) {
+            Point pos = new Point(ran.nextInt(width - 2) + 1, ran.nextInt(height - 2) + 1);
             if (!randomPositionsFences.contains(pos)) {
                 randomPositionsFences.add(pos);
             } else {
@@ -108,8 +113,10 @@ public class BoardControl {
     public static void spawnMhos() {
         Random ran = new Random();
 
-        for (int i = 0; i < 12; i++) {
-            Point pos = new Point(ran.nextInt(10) + 1, ran.nextInt(10) + 1);
+        int mhosToSpawn = (int)((width - 2) * (height - 2) * 0.12 + 0.5);
+
+        for (int i = 0; i < mhosToSpawn; i++) {
+            Point pos = new Point(ran.nextInt(width - 2) + 1, ran.nextInt(height - 2) + 1);
             if (!randomPositionsMhos.contains(pos) && !randomPositionsFences.contains(pos)) {
                 randomPositionsMhos.add(pos);
             } else {
@@ -129,7 +136,7 @@ public class BoardControl {
         Random ran = new Random();
 
         while (true) {
-            Point pos = new Point(ran.nextInt(10) + 1, ran.nextInt(10) + 1);
+            Point pos = new Point(ran.nextInt(width - 2) + 1, ran.nextInt(height - 2) + 1);
             if (!randomPositionsMhos.contains(pos) && !randomPositionsFences.contains(pos)) {
                 randomPositionPlayer = pos;
                 break;
@@ -185,7 +192,7 @@ public class BoardControl {
             case 'c':
                 randomPositionPlayer.setLocation(randomPositionPlayer.getX() + 1, randomPositionPlayer.getY() + 1); break;
             case 'j':
-                randomPositionPlayer.setLocation(ran.nextInt(10) + 1, ran.nextInt(10) + 1); break;
+                randomPositionPlayer.setLocation(ran.nextInt(width - 2) + 1, ran.nextInt(height - 2) + 1); break;
 
         }
 

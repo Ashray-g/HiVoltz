@@ -35,6 +35,13 @@ public class SwingController extends JFrame implements KeyListener {
 
         swingController.setSize(40 * 13, 40 * 13);
 
+        JLabel lblLName = new JLabel("Last Name:");
+        JTextField tfLName = new JTextField(20);
+        lblLName.setLabelFor(tfLName);
+
+        swingController.add(lblLName);
+        panel.add(lblLName);
+
     }
 
     private static Image fence;
